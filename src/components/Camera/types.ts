@@ -10,7 +10,7 @@ export interface CameraProps {
   aspectRatio?: AspectRatio;
   numberOfCamerasCallback?(numberOfCameras: number): void;
   videoSourceDeviceId?: string | undefined;
-  errorMessages: {
+  errorMessages?: {
     noCameraAccessible?: string;
     permissionDenied?: string;
     switchCamera?: string;

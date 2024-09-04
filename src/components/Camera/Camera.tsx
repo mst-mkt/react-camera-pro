@@ -10,6 +10,14 @@ import {
 } from './types';
 import { Container, Wrapper, Canvas, Cam, ErrorMsg } from './styles';
 
+const defaultErrorMessages = {
+  noCameraAccessible: 'No camera device accessible. Please connect your camera or try a different browser.',
+  permissionDenied: 'Permission denied. Please refresh and give camera permission.',
+  switchCamera:
+    'It is not possible to switch camera to different one because there is only one video device accessible.',
+  canvas: 'Canvas is not supported.',
+};
+
 export const Camera = React.forwardRef<unknown, CameraProps>(
   (
     {
@@ -17,13 +25,7 @@ export const Camera = React.forwardRef<unknown, CameraProps>(
       aspectRatio = 'cover',
       numberOfCamerasCallback = () => null,
       videoSourceDeviceId = undefined,
-      errorMessages = {
-        noCameraAccessible: 'No camera device accessible. Please connect your camera or try a different browser.',
-        permissionDenied: 'Permission denied. Please refresh and give camera permission.',
-        switchCamera:
-          'It is not possible to switch camera to different one because there is only one video device accessible.',
-        canvas: 'Canvas is not supported.',
-      },
+      errorMessages: propsErrorMessages = defaultErrorMessages,
       videoReadyCallback = () => null,
     },
     ref,
@@ -40,6 +42,7 @@ export const Camera = React.forwardRef<unknown, CameraProps>(
     const [torchSupported, setTorchSupported] = useState<boolean>(false);
     const [torch, setTorch] = useState<boolean>(false);
     const mounted = useRef(false);
+    const errorMessages = { ...defaultErrorMessages, ...propsErrorMessages };
 
     useEffect(() => {
       mounted.current = true;
